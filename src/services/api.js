@@ -64,3 +64,22 @@ export const searchData = async (query, page) => {
   );
   return res?.data
 };
+
+// GENRES
+export const fetchGenres = async (page, genreId) => {
+  const genreQuery = genreId ? `&with_genres=${genreId}` : "";
+  const url = `${baseUrl}/discover/movie?api_key=${apiKey}&page=${page}${genreQuery}`;
+  console.log("Fetching movies from URL:", url); // Debugging the API call
+  const res = await axios.get(url);
+  return res?.data; // Returns filtered movies
+};
+
+export const fetchGenreList = async () => {
+  const url = `${baseUrl}/genre/movie/list?api_key=${apiKey}&language=en`;
+  console.log("Fetching genres from URL:", url); // Debugging the API call
+  const res = await axios.get(url);
+  return res?.data?.genres || []; // Returns genres
+};
+
+
+

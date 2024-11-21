@@ -59,6 +59,7 @@ const Navbar = () => {
             <Link to="/">Home</Link>
             <Link to="/movies">Movies</Link>
             <Link to="/shows">TV Shows</Link>
+            <Link to="/genres">Genres</Link>
             <Link to="/search">
               <SearchIcon fontSize={"xl"} />
             </Link>
