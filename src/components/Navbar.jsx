@@ -128,6 +128,8 @@ const Navbar = () => {
                     <Link to="/">Home</Link>
                     <Link to="/movies">Movies</Link>
                     <Link to="/shows">TV Shows</Link>
+                    <Link to="/genres">Genres</Link>
+
                     {user && (
                       <>
                         <Link to="/watchlist">Watchlist</Link>
