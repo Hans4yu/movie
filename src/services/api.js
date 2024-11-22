@@ -25,11 +25,24 @@ export const fetchDetails = async (type, id) => {
 // MOVIES & SERIES - Credits
 
 export const fetchCredits = async (type, id) => {
-  const res = await axios.get(
-    `${baseUrl}/${type}/${id}/credits?api_key=${apiKey}`
-  );
-  return res?.data;
+  if (!type || !id) throw new Error("Type and ID are required");
+  
+  const url = `${baseUrl}/${type}/${id}/credits?api_key=${apiKey}`;
+  const res = await axios.get(url);
+
+  if (res?.data?.cast) {
+    // Ensure name and profile_path are included in the cast data
+    const cast = res.data.cast.map((actor) => ({
+      id: actor.id,
+      name: actor.name,
+      profile_path: actor.profile_path,
+    }));
+    return { cast };
+  }
+
+  return { cast: [] }; // Return an empty cast array if no data is found
 };
+
 
 // MOVIES & SERIES - Videos
 
@@ -66,13 +79,20 @@ export const searchData = async (query, page) => {
 };
 
 // GENRES
-export const fetchGenres = async (page, genreId) => {
+export const fetchGenres = async (page, genreId, sortBy = "") => {
+  // Construct dynamic query parameters
   const genreQuery = genreId ? `&with_genres=${genreId}` : "";
-  const url = `${baseUrl}/discover/movie?api_key=${apiKey}&page=${page}${genreQuery}`;
+  const sortQuery = sortBy ? `&sort_by=${sortBy}` : "";
+
+  // Construct API URL
+  const url = `${baseUrl}/discover/movie?api_key=${apiKey}&page=${page}${genreQuery}${sortQuery}`;
   console.log("Fetching movies from URL:", url); // Debugging the API call
+
+  // Perform API call
   const res = await axios.get(url);
-  return res?.data; // Returns filtered movies
+  return res?.data; // Returns filtered and sorted movies
 };
+
 
 export const fetchGenreList = async () => {
   const url = `${baseUrl}/genre/movie/list?api_key=${apiKey}&language=en`;
