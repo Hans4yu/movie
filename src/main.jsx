@@ -14,6 +14,8 @@ import Genres from "./pages/genres/Genres.jsx"; // Import the Genres component
 import { AuthProvider } from "./context/authProvider.jsx";
 import Watchlist from "./pages/Watchlist.jsx";
 import Protected from "./components/routes/Protected.jsx";
+import store from './store';  // Import your Redux store
+import { Provider } from 'react-redux';  // Import Provider from react-redux
 
 const router = createBrowserRouter([
   {
@@ -60,9 +62,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ColorModeScript initialColorMode={theme.config.initialColorMode} />
     <ChakraProvider theme={theme}>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
+      {/* Wrap your app with the Provider from react-redux */}
+      <Provider store={store}>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </Provider>
     </ChakraProvider>
   </React.StrictMode>
 );

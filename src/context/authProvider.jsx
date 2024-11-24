@@ -8,6 +8,8 @@ import {
 } from "firebase/auth";
 import PropTypes from "prop-types";
 
+
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {

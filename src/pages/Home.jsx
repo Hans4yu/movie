@@ -1,55 +1,39 @@
-import { useEffect, useState } from "react";
-import {
-  Box,
-  Container,
-  Flex,
-  Grid,
-  Heading,
-  Skeleton,
-} from "@chakra-ui/react";
-import { fetchTrending } from "../services/api";
+import React, { useEffect, useState } from "react";
+import { Box, Container, Flex, Grid, Heading, Skeleton, Text } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTrendingData } from "../slices/trendingSlice";
 import CardComponent from "../components/CardComponent";
+import BannerHome from "../components/BannerHome";
+
 
 const Home = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [timeWindow, setTimeWindow] = useState("day");
+  const dispatch = useDispatch();
+  const { data, loading, error } = useSelector((state) => state.trending); // Accessing the state from Redux
+
+  const [timeWindow, setTimeWindow] = useState('day');
 
   useEffect(() => {
-    setLoading(true);
-    fetchTrending(timeWindow)
-      .then((res) => {
-        setData(res);
-      })
-      .catch((err) => {
-        console.log(err, "err");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [timeWindow]);
+    dispatch(fetchTrendingData(timeWindow)); // Dispatch the action to fetch data
+  }, [dispatch, timeWindow]);
 
-  console.log(data, "data");
-
+  
   return (
-    <Container maxW={"container.xl"}>
-      <Flex alignItems={"baseline"} gap={"4"} my={"10"}>
-        <Heading as="h2" fontSize={"md"} textTransform={"uppercase"}>
+    <Container maxW={'container.xl'}>
+      {/* Display BannerHome component */}
+      <BannerHome />
+
+      <Flex alignItems={'baseline'} gap={'4'} my={'10'}>
+        <Heading as="h2" fontSize={'md'} textTransform={'uppercase'}>
           Trending
         </Heading>
-        <Flex
-          alignItems={"center"}
-          gap={"2"}
-          border={"1px solid teal"}
-          borderRadius={"20px"}
-        >
+        <Flex alignItems={'center'} gap={'2'} border={'1px solid teal'} borderRadius={'20px'}>
           <Box
             as="button"
             px="3"
             py="1"
-            borderRadius={"20px"}
-            bg={`${timeWindow === "day" ? "gray.800" : ""}`}
-            onClick={() => setTimeWindow("day")}
+            borderRadius={'20px'}
+            bg={`${timeWindow === 'day' ? 'gray.800' : ''}`}
+            onClick={() => setTimeWindow('day')}
           >
             Today
           </Box>
@@ -57,38 +41,42 @@ const Home = () => {
             as="button"
             px="3"
             py="1"
-            borderRadius={"20px"}
-            bg={`${timeWindow === "week" ? "gray.800" : ""}`}
-            onClick={() => setTimeWindow("week")}
+            borderRadius={'20px'}
+            bg={`${timeWindow === 'week' ? 'gray.800' : ''}`}
+            onClick={() => setTimeWindow('week')}
           >
             This Week
           </Box>
         </Flex>
       </Flex>
-      {/* {loading && <div>Loadin...</div>} */}
+
+      {/* Show error message if there's an issue with fetching data */}
+      {error && <Text color="red.500">{error}</Text>}
+
+      {/* Grid for displaying trending items */}
       <Grid
         templateColumns={{
-          base: "1fr",
-          sm: "repeat(2, 1fr)",
-          md: "repeat(4, 1fr)",
-          lg: "repeat(5, 1fr)",
+          base: '1fr',
+          sm: 'repeat(2, 1fr)',
+          md: 'repeat(4, 1fr)',
+          lg: 'repeat(5, 1fr)',
         }}
-        gap={"4"}
+        gap={'4'}
       >
-        {data &&
-          data?.map((item, i) =>
-            loading ? (
-              <Skeleton height={300} key={i} />
+        {loading
+          ? Array.from({ length: 10 }).map((_, index) => (
+              <Skeleton height={300} key={index} />
+            )) // Show skeletons while loading
+          : data.length === 0 ? (
+              <Text>No trending data available.</Text> // Handle empty data
             ) : (
-              <CardComponent
-                key={item?.id}
-                item={item}
-                type={item?.media_type}
-              />
-            )
-          )}
+              data.map((item, i) => (
+                <CardComponent key={item?.id} item={item} type={item?.media_type} />
+              ))
+            )}
       </Grid>
     </Container>
+    
   );
 };
 
