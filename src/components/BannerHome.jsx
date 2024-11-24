@@ -48,22 +48,24 @@ const BannerHome = () => {
   }, [currentImage, bannerData]);
 
   return (
-    <section className="w-full h-screen relative overflow-hidden">
+    <section className="w-full h-full">
       <div className="flex min-h-full max-h-[95vh] overflow-hidden">
         {bannerData.map((data, index) => (
           <div
             key={data.id + "bannerHome" + index}
-            className="min-w-full min-h-full overflow-hidden relative group transition-all duration-500"
+            className="min-w-full min-h-[450px] lg:min-h-full overflow-hidden relative group transition-all"
             style={{
               transform: `translateX(-${currentImage * 100}%)`,
             }}
           >
-            {/* Banner Image */}
-            <img
-              src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
-              className="h-full w-full object-cover"
-              alt={data.title || data.name}
-            />
+            <div className="w-full h-full">
+              {/* Banner Image */}
+              <img
+                src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
+                className="h-full w-full object-cover"
+                alt={data.title || data.name}
+              />
+            </div>
 
             {/* Gradient Overlay */}
             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black"></div>

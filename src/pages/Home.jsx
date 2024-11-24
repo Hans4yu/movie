@@ -24,69 +24,75 @@ const Home = () => {
   }, [dispatch, timeWindow]);
 
   return (
-    <Container maxW={"container.xl"}>
-      {/* Display BannerHome component */}
+    <>
       <BannerHome />
+      <Container maxW={"container.xl"}>
+        {/* Display BannerHome component */}
 
-      <Flex alignItems={"baseline"} gap={"4"} my={"10"}>
-        <Heading as="h2" fontSize={"md"} textTransform={"uppercase"}>
-          Trending
-        </Heading>
-        <Flex
-          alignItems={"center"}
-          gap={"2"}
-          border={"1px solid teal"}
-          borderRadius={"20px"}
-        >
-          <Box
-            as="button"
-            px="3"
-            py="1"
+        <Flex alignItems={"baseline"} gap={"4"} my={"10"}>
+          <Heading as="h2" fontSize={"md"} textTransform={"uppercase"}>
+            Trending
+          </Heading>
+          <Flex
+            alignItems={"center"}
+            gap={"2"}
+            border={"1px solid teal"}
             borderRadius={"20px"}
-            bg={`${timeWindow === "day" ? "gray.800" : ""}`}
-            onClick={() => setTimeWindow("day")}
           >
-            Today
-          </Box>
-          <Box
-            as="button"
-            px="3"
-            py="1"
-            borderRadius={"20px"}
-            bg={`${timeWindow === "week" ? "gray.800" : ""}`}
-            onClick={() => setTimeWindow("week")}
-          >
-            This Week
-          </Box>
+            <Box
+              as="button"
+              px="3"
+              py="1"
+              borderRadius={"20px"}
+              bg={`${timeWindow === "day" ? "gray.800" : ""}`}
+              onClick={() => setTimeWindow("day")}
+            >
+              Today
+            </Box>
+            <Box
+              as="button"
+              px="3"
+              py="1"
+              borderRadius={"20px"}
+              bg={`${timeWindow === "week" ? "gray.800" : ""}`}
+              onClick={() => setTimeWindow("week")}
+            >
+              This Week
+            </Box>
+          </Flex>
         </Flex>
-      </Flex>
 
-      {/* Show error message if there's an issue with fetching data */}
-      {error && <Text color="red.500">{error}</Text>}
+        {/* Show error message if there's an issue with fetching data */}
+        {error && <Text color="red.500">{error}</Text>}
 
-      {/* Grid for displaying trending items */}
-      <Grid
-        templateColumns={{
-          base: "1fr",
-          sm: "repeat(2, 1fr)",
-          md: "repeat(4, 1fr)",
-          lg: "repeat(5, 1fr)",
-        }}
-        gap={"4"}
-      >
-        {loading ? (
-          Array.from({ length: 10 }).map((_, index) => (
-            <Skeleton height={300} key={index} />
-          )) // Show skeletons while loading
-        ) : data.length === 0 ? (
-          <Text>No trending data available.</Text> // Handle empty data
-        ) : (
-          data.map((item, i) => (
-            <CardComponent key={item?.id} item={item} type={item?.media_type} />
-          ))
-        )}
-      </Grid>
-    </Container>
+        {/* Grid for displaying trending items */}
+        <Grid
+          templateColumns={{
+            base: "1fr",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(4, 1fr)",
+            lg: "repeat(5, 1fr)",
+          }}
+          gap={"4"}
+        >
+          {loading ? (
+            Array.from({ length: 10 }).map((_, index) => (
+              <Skeleton height={300} key={index} />
+            )) // Show skeletons while loading
+          ) : data.length === 0 ? (
+            <Text>No trending data available.</Text> // Handle empty data
+          ) : (
+            data.map((item, i) => (
+              <CardComponent
+                key={item?.id}
+                item={item}
+                type={item?.media_type}
+              />
+            ))
+          )}
+        </Grid>
+      </Container>
+    </>
   );
 };
 
