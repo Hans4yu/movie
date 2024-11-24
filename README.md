@@ -7,3 +7,5 @@
 - Firebase
 - Chakra UI
 - TMDB API
+- Redux
+- Tailwind
