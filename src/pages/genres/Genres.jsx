@@ -87,7 +87,9 @@ const Genres = () => {
           }}
         >
           <option value="popularity.desc">Popular</option>
-          <option value="vote_average.desc&vote_count.gte=1000">Top Rated</option>
+          <option value="vote_average.desc&vote_count.gte=1000">
+            Top Rated
+          </option>
         </Select>
       </Flex>
 

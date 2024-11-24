@@ -12,10 +12,7 @@ import { Link } from "react-router-dom";
 import { imagePath } from "../services/api";
 import { useFirestore } from "../services/firestore";
 import { useAuth } from "../context/useAuth";
-import {
-  CheckIcon,
-  StarIcon,
-} from "@chakra-ui/icons";
+import { CheckIcon, StarIcon } from "@chakra-ui/icons";
 
 const WatchlistCard = ({ type, item, setWatchlist }) => {
   const { removeFromWatchlist } = useFirestore();
@@ -55,7 +52,7 @@ const WatchlistCard = ({ type, item, setWatchlist }) => {
         </Box>
 
         <Box>
-          <Heading fontSize={{base: 'xl', md: "2xl"}} noOfLines={1}>
+          <Heading fontSize={{ base: "xl", md: "2xl" }} noOfLines={1}>
             {item?.title || item?.name}
           </Heading>
           <Heading fontSize={"sm"} color={"green.200"} mt="2">
@@ -69,7 +66,7 @@ const WatchlistCard = ({ type, item, setWatchlist }) => {
               {item?.vote_average?.toFixed(1)}
             </Text>
           </Flex>
-          <Text mt="4" fontSize={{base: "xs", md: "sm"}} noOfLines={5}>
+          <Text mt="4" fontSize={{ base: "xs", md: "sm" }} noOfLines={5}>
             {item?.overview}
           </Text>
         </Box>

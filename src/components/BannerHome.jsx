@@ -69,24 +69,23 @@ const BannerHome = () => {
             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black"></div>
 
             {/* Banner Content */}
-<div className="absolute bottom-10 left-10 text-white max-w-lg space-y-4">
-  <h1 className="text-4xl font-bold drop-shadow-lg">
-    {data.title || data.name}
-  </h1>
-  <p className="text-md line-clamp-3">{data.overview}</p>
-  <div className="flex items-center space-x-4">
-    <p>Rating: {data.vote_average.toFixed(1)}</p>
-    <p>|</p>
-    <p>Views: {data.popularity.toFixed(0)}</p>
-  </div>
-  {/* Added margin-top for spacing */}
-  <Link to={`/${data.media_type}/${data.id}`}>
-    <button className="mt-4 px-4 py-2 bg-red-600 rounded hover:bg-red-800 transition">
-      Play Now
-    </button>
-  </Link>
-</div>
-
+            <div className="absolute bottom-10 left-10 text-white max-w-lg space-y-4">
+              <h1 className="text-4xl font-bold drop-shadow-lg">
+                {data.title || data.name}
+              </h1>
+              <p className="text-md line-clamp-3">{data.overview}</p>
+              <div className="flex items-center space-x-4">
+                <p>Rating: {data.vote_average.toFixed(1)}</p>
+                <p>|</p>
+                <p>Views: {data.popularity.toFixed(0)}</p>
+              </div>
+              {/* Added margin-top for spacing */}
+              <Link to={`/${data.media_type}/${data.id}`}>
+                <button className="mt-4 px-4 py-2 bg-red-600 rounded hover:bg-red-800 transition">
+                  Play Now
+                </button>
+              </Link>
+            </div>
 
             {/* Navigation Buttons */}
             <button

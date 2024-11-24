@@ -26,7 +26,7 @@ export const fetchDetails = async (type, id) => {
 
 export const fetchCredits = async (type, id) => {
   if (!type || !id) throw new Error("Type and ID are required");
-  
+
   const url = `${baseUrl}/${type}/${id}/credits?api_key=${apiKey}`;
   const res = await axios.get(url);
 
@@ -42,7 +42,6 @@ export const fetchCredits = async (type, id) => {
 
   return { cast: [] }; // Return an empty cast array if no data is found
 };
-
 
 // MOVIES & SERIES - Videos
 
@@ -75,7 +74,7 @@ export const searchData = async (query, page) => {
   const res = await axios.get(
     `${baseUrl}/search/multi?api_key=${apiKey}&query=${query}&page=${page}`
   );
-  return res?.data
+  return res?.data;
 };
 
 // GENRES
@@ -93,13 +92,9 @@ export const fetchGenres = async (page, genreId, sortBy = "") => {
   return res?.data; // Returns filtered and sorted movies
 };
 
-
 export const fetchGenreList = async () => {
   const url = `${baseUrl}/genre/movie/list?api_key=${apiKey}&language=en`;
   console.log("Fetching genres from URL:", url); // Debugging the API call
   const res = await axios.get(url);
   return res?.data?.genres || []; // Returns genres
 };
-
-
-

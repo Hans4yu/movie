@@ -7,7 +7,11 @@ const Footer = () => {
         {/* Contact Section */}
         <Text mb={4}>
           Questions? Call{" "}
-          <Link href="tel:007-803-321-2130" color="blue.400" _hover={{ textDecoration: "underline" }}>
+          <Link
+            href="tel:007-803-321-2130"
+            color="blue.400"
+            _hover={{ textDecoration: "underline" }}
+          >
             007-803-321-2130
           </Link>
         </Text>
@@ -91,7 +95,9 @@ const Footer = () => {
         </Flex>
 
         {/* Footer Text */}
-        <Text textAlign={{ base: "center", md: "start" }}>Netflix Indonesia</Text>
+        <Text textAlign={{ base: "center", md: "start" }}>
+          Netflix Indonesia
+        </Text>
       </Box>
     </Box>
   );

@@ -265,52 +265,51 @@ const DetailsPage = () => {
           Cast
         </Heading>
         <Flex mt="5" mb="10" overflowX={"scroll"} gap={"5"}>
-  {cast?.length === 0 && <Text>No cast found</Text>}
-  {cast &&
-    cast.map((item) => (
-      <Box
-        key={item?.id}
-        minW={"150px"}
-        position="relative"
-        _hover={{
-          "& .actor-name-overlay": {
-            opacity: 1,
-          },
-        }}
-      >
-        {/* Actor Image */}
-        <Image
-          src={`${imagePath}/${item?.profile_path}`}
-          w={"100%"}
-          height={"225px"}
-          objectFit={"cover"}
-          borderRadius={"sm"}
-        />
-        {/* Actor Name Overlay */}
-        <Box
-          className="actor-name-overlay"
-          position="absolute"
-          bottom="0"
-          left="0"
-          w="100%"
-          h="30%"
-          bg="rgba(0, 0, 0, 0.7)"
-          color="white"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          borderBottomRadius="sm"
-          opacity={0}
-          transition="opacity 0.3s ease-in-out"
-        >
-          <Text fontSize="sm" fontWeight="bold" textAlign="center">
-            {item?.name}
-          </Text>
-        </Box>
-      </Box>
-    ))}
-</Flex>
-
+          {cast?.length === 0 && <Text>No cast found</Text>}
+          {cast &&
+            cast.map((item) => (
+              <Box
+                key={item?.id}
+                minW={"150px"}
+                position="relative"
+                _hover={{
+                  "& .actor-name-overlay": {
+                    opacity: 1,
+                  },
+                }}
+              >
+                {/* Actor Image */}
+                <Image
+                  src={`${imagePath}/${item?.profile_path}`}
+                  w={"100%"}
+                  height={"225px"}
+                  objectFit={"cover"}
+                  borderRadius={"sm"}
+                />
+                {/* Actor Name Overlay */}
+                <Box
+                  className="actor-name-overlay"
+                  position="absolute"
+                  bottom="0"
+                  left="0"
+                  w="100%"
+                  h="30%"
+                  bg="rgba(0, 0, 0, 0.7)"
+                  color="white"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  borderBottomRadius="sm"
+                  opacity={0}
+                  transition="opacity 0.3s ease-in-out"
+                >
+                  <Text fontSize="sm" fontWeight="bold" textAlign="center">
+                    {item?.name}
+                  </Text>
+                </Box>
+              </Box>
+            ))}
+        </Flex>
 
         <Heading
           as="h2"

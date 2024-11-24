@@ -30,7 +30,7 @@ const PaginationComponent = ({ activePage, totalPages, setActivePage }) => {
 PaginationComponent.propTypes = {
   activePage: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
-  setActivePage: PropTypes.func.isRequired
+  setActivePage: PropTypes.func.isRequired,
 };
 
 export default PaginationComponent;

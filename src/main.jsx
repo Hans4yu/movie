@@ -14,8 +14,8 @@ import Genres from "./pages/genres/Genres.jsx"; // Import the Genres component
 import { AuthProvider } from "./context/authProvider.jsx";
 import Watchlist from "./pages/Watchlist.jsx";
 import Protected from "./components/routes/Protected.jsx";
-import store from './store';  // Import your Redux store
-import { Provider } from 'react-redux';  // Import Provider from react-redux
+import store from "./store"; // Import your Redux store
+import { Provider } from "react-redux"; // Import Provider from react-redux
 
 const router = createBrowserRouter([
   {
