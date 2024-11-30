@@ -108,25 +108,10 @@ export const fetchCredits = async (type, id) => {
 // MOVIES & SERIES - Videos
 
 export const fetchVideos = async (type, id) => {
-  const cacheKey = `${type}-${id}-videos`; // Cache key untuk videos
-  const cachedData = getCache(cacheKey);
-
-  if (cachedData) {
-    console.log(`Using cached videos for ${type} ${id}`);
-    return cachedData;
-  }
-
-  try {
-    const res = await axios.get(
-      `${baseUrl}/${type}/${id}/videos?api_key=${apiKey}`
-    );
-    const data = res?.data?.results || [];
-    setCache(cacheKey, data); // Simpan data ke cache
-    return data; // Kembalikan data video
-  } catch (error) {
-    console.error(`Error fetching videos for ${type} ${id}:`, error);
-    return []; // Kembalikan data kosong jika terjadi error
-  }
+  const res = await axios.get(
+    `${baseUrl}/${type}/${id}/videos?api_key=${apiKey}`
+  );
+  return res?.data;
 };
 
 // DISCOVER
