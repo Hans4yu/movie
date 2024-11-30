@@ -1,9 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 // Thunk to fetch trending data
 export const fetchTrendingData = createAsyncThunk(
-  'trending/fetchTrendingData',
-  async (timeWindow = 'day') => {
+  "trending/fetchTrendingData",
+  async (timeWindow = "day") => {
     const apiKey = import.meta.env.VITE_API_KEY;
     const response = await fetch(
       `https://api.themoviedb.org/3/trending/all/${timeWindow}?api_key=${apiKey}`
@@ -15,7 +15,7 @@ export const fetchTrendingData = createAsyncThunk(
 
 // Slice to manage trending data state
 const trendingSlice = createSlice({
-  name: 'trending',
+  name: "trending",
   initialState: {
     data: [],
     loading: false,
