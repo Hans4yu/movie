@@ -14,3 +14,4 @@ export default defineConfig({
     historyApiFallback: true, // Enables SPA routing on the development server
   },
 });
+//work
