@@ -10,7 +10,7 @@ import Movies from "./pages/movies/Movies.jsx";
 import Shows from "./pages/shows/Shows.jsx";
 import Search from "./pages/search/Search.jsx";
 import DetailsPage from "./pages/DetailsPage.jsx";
-import Genres from "./pages/genres/Genres.jsx"; // Import the Genres component
+// Import the Genres component
 import { AuthProvider } from "./context/authProvider.jsx";
 import Watchlist from "./pages/Watchlist.jsx";
 import Protected from "./components/routes/Protected.jsx";
@@ -37,10 +37,6 @@ const router = createBrowserRouter([
       {
         path: "/search",
         element: <Search />,
-      },
-      {
-        path: "/genres",
-        element: <Genres />, // Use the imported Genres component
       },
       {
         path: "/:type/:id",

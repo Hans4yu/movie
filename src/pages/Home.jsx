@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -82,7 +83,7 @@ const Home = () => {
           ) : data.length === 0 ? (
             <Text>No trending data available.</Text> // Handle empty data
           ) : (
-            data.map((item, i) => (
+            data.map((item) => (
               <CardComponent
                 key={item?.id}
                 item={item}

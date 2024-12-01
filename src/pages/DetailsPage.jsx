@@ -320,7 +320,8 @@ const DetailsPage = () => {
         >
           Videos
         </Heading>
-        <VideoComponent id={video?.key} />
+        <VideoComponent id={video?.key || "defaultKey"} />
+
         <Flex mt="5" mb="10" overflowX={"scroll"} gap={"5"}>
           {videos &&
             videos?.map((item) => (

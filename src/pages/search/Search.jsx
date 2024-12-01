@@ -1,4 +1,6 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom"; // Import necessary hooks
 import {
   Container,
   Flex,
@@ -19,7 +21,6 @@ import { useAuth } from "../../context/useAuth";
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
   const [tempSearchValue, setTempSearchValue] = useState("");
-  const [activePage, setActivePage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -29,20 +30,35 @@ const Search = () => {
     useFirestore();
   const { user } = useAuth(); // Get the current logged-in user
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Extract current page and search query from URL params or defaults
+  const queryParams = new URLSearchParams(location.search);
+  const currentPage = Number(queryParams.get("page")) || 1;
+  const urlSearchValue = queryParams.get("search") || ""; // Get search term from URL
+
+  // Set search value from the URL's search query parameter
+  useEffect(() => {
+    if (urlSearchValue) {
+      setSearchValue(urlSearchValue);
+      setTempSearchValue(urlSearchValue);
+    }
+  }, [urlSearchValue]);
+
   // Fetch search results when searchValue or activePage changes
   useEffect(() => {
     if (!searchValue) return;
 
     setIsLoading(true);
-    searchData(searchValue, activePage)
+    searchData(searchValue, currentPage)
       .then((res) => {
         setData(res?.results);
-        setActivePage(res?.page);
         setTotalPages(res?.total_pages);
       })
       .catch((err) => console.log(err, "err"))
       .finally(() => setIsLoading(false));
-  }, [searchValue, activePage]);
+  }, [searchValue, currentPage]);
 
   // Fetch search history on mount
   useEffect(() => {
@@ -69,6 +85,9 @@ const Search = () => {
 
     setSearchValue(tempSearchValue); // Trigger search
     setTempSearchValue(""); // Clear input
+
+    // Update the URL with the search query
+    navigate(`?search=${tempSearchValue}&page=1`);
   };
 
   const handleClearHistory = async () => {
@@ -76,6 +95,11 @@ const Search = () => {
       await clearSearchHistory(user.uid);
       setSearchHistory([]); // Clear local state
     }
+  };
+
+  // Function to handle page change via PaginationComponent
+  const handlePageChange = (page) => {
+    navigate(`?search=${searchValue}&page=${page}`); // Update the page number in the URL
   };
 
   return (
@@ -154,9 +178,9 @@ const Search = () => {
       {/* Pagination */}
       {data?.length > 0 && !isLoading && (
         <PaginationComponent
-          activePage={activePage}
+          activePage={currentPage}
           totalPages={totalPages}
-          setActivePage={setActivePage}
+          setActivePage={handlePageChange} // Use navigate for page change
         />
       )}
     </Container>

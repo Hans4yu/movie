@@ -239,3 +239,49 @@ export const fetchGenreList = async () => {
     return []; // Kembalikan data kosong jika terjadi error
   }
 };
+
+// Fetch TV shows based on selected genre, page, and sorting
+export const fetchGenresForTVShows = async (page, genreId, sortBy = "") => {
+  const cacheKey = `tv-genres-${genreId}-page-${page}-sort-${sortBy}`; // Cache key for TV shows
+  const cachedData = getCache(cacheKey);
+
+  if (cachedData) {
+    console.log(`Using cached TV genre data for genre ${genreId}`);
+    return cachedData;
+  }
+
+  try {
+    const genreQuery = genreId ? `&with_genres=${genreId}` : "";
+    const sortQuery = sortBy ? `&sort_by=${sortBy}` : "";
+    const url = `${baseUrl}/discover/tv?api_key=${apiKey}&page=${page}${genreQuery}${sortQuery}`;
+    const res = await axios.get(url);
+    const data = res?.data;
+    setCache(cacheKey, data); // Cache the fetched data
+    return data; // Return the fetched data
+  } catch (error) {
+    console.error(`Error fetching TV genre data for genre ${genreId}:`, error);
+    return { results: [], total_pages: 0 }; // Return empty data on error
+  }
+};
+
+// Fetch the list of TV genres
+export const fetchTvGenreList = async () => {
+  const cacheKey = `tv-genre-list`; // Cache key for TV genre list
+  const cachedData = getCache(cacheKey);
+
+  if (cachedData) {
+    console.log(`Using cached TV genre list`);
+    return cachedData;
+  }
+
+  try {
+    const url = `${baseUrl}/genre/tv/list?api_key=${apiKey}&language=en`;
+    const res = await axios.get(url);
+    const data = res?.data?.genres || [];
+    setCache(cacheKey, data); // Cache the genre list
+    return data; // Return the genre list
+  } catch (error) {
+    console.error("Error fetching TV genre list:", error);
+    return []; // Return empty list on error
+  }
+};
