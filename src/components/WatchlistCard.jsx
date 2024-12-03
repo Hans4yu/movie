@@ -20,7 +20,11 @@ const WatchlistCard = ({ type, item, setWatchlist }) => {
 
   const handleRemoveClick = (event) => {
     event.preventDefault(); // Prevent the default behavior (link redirection)
-    removeFromWatchlist(user?.uid, item.id).then(() => {
+
+    // Ensure item.id is a valid string
+    const itemId = String(item.id);
+
+    removeFromWatchlist(user?.uid, itemId).then(() => {
       setWatchlist((prev) => prev.filter((el) => el.id !== item.id));
     });
   };
